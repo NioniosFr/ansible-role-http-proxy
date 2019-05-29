@@ -1,0 +1,32 @@
+---
+- name: Setup
+  when: proxy_http_proxy is defined or proxy_https_proxy is defined
+  block:
+    - name: Copy proxy profiler
+      become: yes
+      template:
+        src: "proxy_profile.sh.j2"
+        dest: "/etc/profile.d/proxy.sh"
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: Add a sudoers file to allow variables to be kept during switches
+      become: yes
+      template:
+        src: "keep_proxy.j2"
+        dest: "/etc/sudoers.d/keep_proxy"
+        mode: 0640
+        validate: "visudo -cf %s"
+
+- name: CleanUp
+  when: proxy_http_proxy is undefined and proxy_https_proxy is undefined
+  block:
+    - name: Copy proxy profiler
+      become: yes
+      file:
+        state: "absent"
+        path: "proxy_profile.sh.j2"
+      loop:
+        - /etc/profile.d/proxy.sh
+        - /etc/sudoers.d/keep_proxy

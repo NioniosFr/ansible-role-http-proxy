@@ -1,0 +1,13 @@
+# To be placed in /etc/profile.d/
+{% if proxy_http_proxy is defined %}
+export HTTP_PROXY="{{proxy_http_proxy}}"
+export http_proxy="${HTTP_PROXY}"
+{% endif %}
+{% if proxy_https_proxy is defined %}
+export HTTPS_PROXY="{{proxy_https_proxy}}"
+export https_proxy="${HTTPS_PROXY}"
+{% endif %}
+{% if proxy_no_proxy is defined %}
+export NO_PROXY="{{proxy_no_proxy}}"
+export no_proxy="${NO_PROXY}"
+{% endif %}

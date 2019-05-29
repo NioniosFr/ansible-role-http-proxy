@@ -1,0 +1,6 @@
+---
+
+# proxy_http_proxy: ""
+# proxy_https_proxy: ""
+# proxy_no_proxy: ""
+proxy_keep_when_sudo: true

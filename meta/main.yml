@@ -1,0 +1,46 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: http_proxy
+  author: NioniosFr
+  description: A role to configure a proxy server for a Linux based system.
+  license: "license (MIT)"
+
+  min_ansible_version: 2.0
+
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+
+    - name: EL
+      versions:
+        - all
+
+    - name: Ubuntu
+      versions:
+        - all
+
+    - name: Debian
+      versions:
+        - all
+
+  galaxy_tags:
+    - development
+    - centos
+    - debian
+    - ubuntu
+    - el
+    - system
+    - infrastructure
+    - orchestration
+    - automation
+    - networking
+    - base
+    - proxy
+    - http
+    - network
+    - dmz
+    - intranet
+    - internal
