@@ -1,0 +1,6 @@
+---
+- name: Cleanup proxy settings
+  hosts: localhost
+  remote_user: root
+  roles:
+        - role: ../ansible-role-http-proxy # cleanup

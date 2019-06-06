@@ -1,5 +1,23 @@
 ---
 - name: Setup
+  when: proxy_env is defined
+  block:
+    - name: Maybe set http_proxy
+      when: proxy_env.http_proxy is defined
+      set_fact:
+        proxy_http_proxy: "{{ proxy_env.http_proxy | default('') }}"
+
+    - name: Maybe set https_proxy
+      when: proxy_env.https_proxy is defined
+      set_fact:
+        proxy_https_proxy: "{{ proxy_env.http_proxy | default('') }}"
+
+    - name: Maybe set no_proxy
+      when: proxy_env.no_proxy is defined
+      set_fact:
+        proxy_no_proxy: "{{ proxy_env.http_proxy | default('') }}"
+
+- name: Setup
   when: proxy_http_proxy is defined or proxy_https_proxy is defined
   block:
     - name: Copy proxy profiler
@@ -13,6 +31,7 @@
 
     - name: Add a sudoers file to allow variables to be kept during switches
       become: yes
+      when: proxy_keep_when_sudo | bool
       template:
         src: "keep_proxy.j2"
         dest: "/etc/sudoers.d/keep_proxy"
@@ -22,11 +41,11 @@
 - name: CleanUp
   when: proxy_http_proxy is undefined and proxy_https_proxy is undefined
   block:
-    - name: Copy proxy profiler
+    - name: CleanUp any proxy configs
       become: yes
       file:
         state: "absent"
-        path: "proxy_profile.sh.j2"
+        path: "{{ item }}"
       loop:
         - /etc/profile.d/proxy.sh
         - /etc/sudoers.d/keep_proxy

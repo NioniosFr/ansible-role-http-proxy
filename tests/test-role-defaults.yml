@@ -1,0 +1,10 @@
+---
+- name: Set proxy vars by passing role variables
+  hosts: localhost
+  remote_user: root
+  roles:
+    - role: ../ansible-role-http-proxy
+      vars:
+        proxy_http_proxy: "http://role:3128"
+        proxy_https_proxy: "http://role:3128"
+        proxy_no_proxy: "role"

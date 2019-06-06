@@ -1,0 +1,11 @@
+---
+- name: Set proxy vars from ansible convention 'proxy_env' variable
+  hosts: localhost
+  remote_user: root
+  vars:
+      proxy_env:
+        http_proxy: "http://proxy_env:3128"
+        https_proxy: "http://proxy_env:3129"
+        no_proxy: "proxy_env"
+  roles:
+      - role: ../ansible-role-http-proxy
